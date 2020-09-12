@@ -42,6 +42,7 @@ public class Place {
 		this.longitude = longitude;
 		this.setRadiansLongitude(longitude);
 		this.distances = new TreeMap<>();
+		this.pheromonTrail = new TreeMap<>();
 	}
 
 	/**
