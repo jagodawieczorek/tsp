@@ -27,6 +27,8 @@ public class Place {
 
 	private Map<Integer, Double> pheromonTrail;
 
+	private Map<Integer, Double> indicators;
+
 	/**
 	 * @param id
 	 *                      ID from source file
@@ -43,6 +45,7 @@ public class Place {
 		this.setRadiansLongitude(longitude);
 		this.distances = new TreeMap<>();
 		this.pheromonTrail = new TreeMap<>();
+		this.indicators = new TreeMap<>();
 	}
 
 	/**
@@ -182,5 +185,39 @@ public class Place {
 
 	public void setPheromonTrail(final Integer key, final Double trail) {
 		this.pheromonTrail.put(key, trail);
+	}
+
+	public Map<Integer, Double> getIndicators() {
+		return this.indicators;
+	}
+
+	public void setIndicators(final Map<Integer, Double> indicators) {
+		this.indicators = indicators;
+	}
+
+	public void setIndicator(final Place place, final Double indicator) {
+		this.indicators.put(place.getId(), indicator);
+	}
+
+	public void setIndicator(final Integer key, final Double indicator) {
+		this.indicators.put(key, indicator);
+	}
+
+	public Double getIndicator(final Place place) {
+		Double indicator = this.indicators.get(place.getId());
+		if (indicator == null) {
+			indicator = 0.0;
+			this.setPheromonTrail(place.getId(), indicator);
+		}
+		return indicator;
+	}
+
+	public Double getIndicator(final Integer key) {
+		Double indicator = this.indicators.get(key);
+		if (indicator == null) {
+			indicator = 0.0;
+			this.setPheromonTrail(key, indicator);
+		}
+		return indicator;
 	}
 }
