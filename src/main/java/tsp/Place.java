@@ -25,6 +25,8 @@ public class Place {
 
 	private Map<Integer, Integer> distances;
 
+	private Map<Integer, Double> pheromonTrail;
+
 	/**
 	 * @param id
 	 *                      ID from source file
@@ -145,5 +147,29 @@ public class Place {
 	 */
 	public void setDistances(final Map<Integer, Integer> distances) {
 		this.distances = distances;
+	}
+
+	public Map<Integer, Double> getPheromonTrail() {
+		return this.pheromonTrail;
+	}
+
+	public void setPheromonTrail(final Map<Integer, Double> pheromonTrail) {
+		this.pheromonTrail = pheromonTrail;
+	}
+
+	public Double getPheromonTrail(final Place place) {
+		return this.pheromonTrail.get(place.getId());
+	}
+
+	public Double getPheromonTrail(final Integer key) {
+		return this.pheromonTrail.get(key);
+	}
+
+	public void setPheromonTrail(final Place place, final Double trail) {
+		this.pheromonTrail.put(place.getId(), trail);
+	}
+
+	public void setPheromonTrail(final Integer key, final Double trail) {
+		this.pheromonTrail.put(key, trail);
 	}
 }
