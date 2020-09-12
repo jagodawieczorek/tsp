@@ -159,11 +159,21 @@ public class Place {
 	}
 
 	public Double getPheromonTrail(final Place place) {
-		return this.pheromonTrail.get(place.getId());
+		Double trail = this.pheromonTrail.get(place.getId());
+		if (trail == null) {
+			trail = 0.0;
+			this.setPheromonTrail(place.getId(), trail);
+		}
+		return trail;
 	}
 
 	public Double getPheromonTrail(final Integer key) {
-		return this.pheromonTrail.get(key);
+		Double trail = this.pheromonTrail.get(key);
+		if (trail == null) {
+			trail = 0.0;
+			this.setPheromonTrail(key, trail);
+		}
+		return trail;
 	}
 
 	public void setPheromonTrail(final Place place, final Double trail) {
