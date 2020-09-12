@@ -161,7 +161,7 @@ public class Place {
 	public Double getPheromonTrail(final Place place) {
 		Double trail = this.pheromonTrail.get(place.getId());
 		if (trail == null) {
-			trail = 0.0;
+			trail = 1.0;
 			this.setPheromonTrail(place.getId(), trail);
 		}
 		return trail;
@@ -170,7 +170,7 @@ public class Place {
 	public Double getPheromonTrail(final Integer key) {
 		Double trail = this.pheromonTrail.get(key);
 		if (trail == null) {
-			trail = 0.0;
+			trail = 1.0;
 			this.setPheromonTrail(key, trail);
 		}
 		return trail;
