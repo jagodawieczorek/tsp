@@ -86,16 +86,4 @@ class TSPTest {
 		final TreeMap<Integer, Place> places = tsp.getPlaces();
 		assertThat(places.get(1).getDistances().size()).isEqualTo(136);
 	}
-
-	@Test
-	@DisplayName("Should assign starting place which is first place on the list")
-	void shouldSetStartingPlace() {
-		// given
-		final TSP tsp = new TSP();
-		tsp.setFromFile(FILE_WITH_GROUP_OF_4_COORDINATES);
-		// when
-		tsp.setStartingPlace();
-		// then
-		assertThat(tsp.getStartingPlace()).isEqualTo(1);
-	}
 }

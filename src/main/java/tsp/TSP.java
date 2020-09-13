@@ -33,8 +33,6 @@ public class TSP {
 
 	private EdgeWeightType edgeWeightType;
 
-	private Integer startingPlace;
-
 	public TSP() {
 		this.places = new TreeMap<>();
 	}
@@ -46,7 +44,6 @@ public class TSP {
 	public TSP(final String sourceFilename) {
 		this();
 		this.setFromFile(sourceFilename);
-		this.setStartingPlace();
 		this.calculateAndAssignDistances();
 	}
 
@@ -56,28 +53,23 @@ public class TSP {
 	 */
 	public void setFromFile(final String sourceFilename) {
 		this.sourceFilename = sourceFilename;
-
 		try (BufferedReader reader = new BufferedReader(new FileReader(sourceFilename))) {
 			String line;
-
 			while ((line = reader.readLine()) != null) {
 				if (line.startsWith("NAME:")) {
 					this.name = line.replace("NAME:", "").trim();
 				} else if (line.startsWith("TYPE:")) {
 					final String type = line.replace("TYPE:", "").trim();
-
 					if (!type.equalsIgnoreCase("TSP")) {
 						throw new IllegalArgumentException("Source file can't be of type: " + type);
 					}
 				} else if (line.startsWith("EDGE_WEIGHT_TYPE:")) {
 					this.edgeWeightType = EdgeWeightType.valueOf(line.replace("EDGE_WEIGHT_TYPE:", "").trim());
-
 					if (!ALLOWED_EDGE_WEIGHT_TYPES.contains(this.edgeWeightType)) {
 						throw new IllegalArgumentException(this.edgeWeightType + " edge weight type is not allowed to use");
 					}
 				} else if (line.startsWith("DISPLAY_DATA_TYPE:")) {
 					this.displayDataType = DisplayDataType.valueOf(line.replace("DISPLAY_DATA_TYPE:", "").trim());
-
 					if (!ALLOWED_DISPLAY_DATA_TYPES.contains(this.displayDataType)) {
 						throw new IllegalArgumentException(ALLOWED_DISPLAY_DATA_TYPES + " display data type is not allowed to use");
 					}
@@ -90,14 +82,9 @@ public class TSP {
 					}
 				}
 			}
-
 		} catch (IOException | IllegalArgumentException e) {
 			LOGGER.log(Level.FINE, e.toString());
 		}
-	}
-
-	public void setStartingPlace() {
-		this.startingPlace = this.getPlaces().firstKey();
 	}
 
 	public void calculateAndAssignDistances() {
@@ -106,7 +93,6 @@ public class TSP {
 
 	public static TreeMap<Integer, Place> calculateDistances(final TreeMap<Integer, Place> places) {
 		final Set<Map.Entry<Integer, Place>> listOfPlaces = places.entrySet();
-
 		for (final Map.Entry<Integer, Place> startPlace: listOfPlaces) {
 			try {
 				for (final Map.Entry<Integer, Place> endPlace: listOfPlaces) {
@@ -114,7 +100,6 @@ public class TSP {
 						startPlace.getValue().setDistanceTo(endPlace.getValue());
 					}
 				}
-
 				final Map<Integer, Integer> origDistances = startPlace.getValue().getDistances();
 				startPlace.getValue().setDistances(origDistances.entrySet().stream().sorted(Map.Entry.comparingByValue())
 						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new)));
@@ -122,7 +107,6 @@ public class TSP {
 				LOGGER.log(Level.WARNING, e.toString());
 			}
 		}
-
 		return places;
 	}
 
@@ -159,13 +143,6 @@ public class TSP {
 	 */
 	public EdgeWeightType getEdgeWeightType() {
 		return this.edgeWeightType;
-	}
-
-	/**
-	 * @return Key of the starting place
-	 */
-	public Integer getStartingPlace() {
-		return this.startingPlace;
 	}
 
 	public enum EdgeWeightType {
